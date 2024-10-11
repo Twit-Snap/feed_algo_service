@@ -1,4 +1,5 @@
-from pydantic import BaseModel, Field
+from typing import List
+from pydantic import BaseModel
 
 class Tweet(BaseModel):
     id : str
@@ -9,14 +10,14 @@ class Tweet(BaseModel):
         missing = "forbid"
 
 class TweetRequest(BaseModel):
-    data: list[Tweet]
+    data: List[Tweet]
 
     class Config:
         extra = "forbid"
         missing = "forbid"
 
 class TweetRanking(BaseModel):
-    data: list[Tweet]
+    data: List[Tweet]
 
     class Config:
         extra = "forbid"

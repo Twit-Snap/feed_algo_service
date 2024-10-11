@@ -5,7 +5,7 @@ class AlgoController:
     def __init__(self):
         self.__db = vectorial_db
 
-    def add_tweets_to_index(self, request: TweetRequest):
+    def add_tweets_to_index(self, request: TweetRequest) -> None:
         request_data = []
         for tweet_data in request.data:
             request_data.append((tweet_data.id, tweet_data.content))

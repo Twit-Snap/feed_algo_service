@@ -1,5 +1,6 @@
 import faiss
 from sentence_transformers import SentenceTransformer
+from typing import List, Tuple
 
 #sentence-transformers/all-MiniLM-L6-v2
 #jaimevera1107/all-MiniLM-L6-v2-similarity-es
@@ -16,7 +17,7 @@ class VectorialDatabase:
         _index = faiss.IndexFlatIP(self.model.encode(["Seed"]).shape[1])
         self.index = faiss.IndexIDMap(_index)
 
-    def add_tweets_to_index(self, tweets_data: list[tuple[str, str]]):
+    def add_tweets_to_index(self, tweets_data: List[Tuple[str, str]]):
         for tweet_uuid, tweet_content in tweets_data:
             internal_tweet_id = len(self.tweets)
             self.tweets[internal_tweet_id] = tweet_content
@@ -24,7 +25,7 @@ class VectorialDatabase:
         tweets_embedding = self.model.encode(list(self.tweets.values()))
         self.index.add_with_ids(tweets_embedding, list(self.tweets.keys()))
 
-    def rank_by_tweets_sample(self, tweets_sample: list[str], k: int = 3):
+    def rank_by_tweets_sample(self, tweets_sample: List[str], k: int = 3):
         ranking = {}
         tweets_sample_embedding = self.model.encode(tweets_sample)
         D, I = self.index.search(tweets_sample_embedding, k=k)
