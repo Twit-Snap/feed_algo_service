@@ -5,7 +5,7 @@ from sentence_transformers import SentenceTransformer
 #jaimevera1107/all-MiniLM-L6-v2-similarity-es
 
 class VectorialDatabase:
-    def __init__(self, model_url : str = "jaimevera1107/all-MiniLM-L6-v2-similarity-es"):
+    def __init__(self, model_url : str = "sentence-transformers/all-MiniLM-L6-v2"):
         # Initialize the Tweets and uuid containers.
         # As the vectorial database uses integers for indexing, a copy of the uuids is stored in a dictionary.
         self.uuid_hash = {}
