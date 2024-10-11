@@ -1,0 +1,4 @@
+fastapi[all]==0.88.0
+pytest==8.3.2
+python-dotenv==1.0.1
+sentence_transformers==3.2.0
