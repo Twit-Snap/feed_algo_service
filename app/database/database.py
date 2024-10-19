@@ -28,6 +28,10 @@ class VectorialDatabase:
     def rank_by_tweets_sample(self, tweets_sample: List[str], k: int = 3):
         ranking = {}
         tweets_sample_embedding = self.model.encode(tweets_sample)
+
+        # Make the limit value of k the same as the number of tweets in the database.
+        if k > len(self.tweets): k = len(self.tweets)
+
         D, I = self.index.search(tweets_sample_embedding, k=k)
         for tweet_id in I[0]:
             tweet_uuid = self.uuid_hash[tweet_id]

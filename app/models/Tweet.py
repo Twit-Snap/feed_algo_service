@@ -11,6 +11,7 @@ class Tweet(BaseModel):
 
 class TweetRequest(BaseModel):
     data: List[Tweet]
+    limit: int
 
     class Config:
         extra = "forbid"

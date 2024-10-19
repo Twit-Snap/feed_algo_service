@@ -5,10 +5,9 @@ from typing import Dict
 
 router = APIRouter()
 
-@router.post("/", status_code=201)
-async def refresh_index_content(request: TweetRequest) -> Dict[str, str]:
+@router.post("/", status_code=200)
+async def refresh_index_content(request: TweetRequest) -> None:
     algo_controller.add_tweets_to_index(request)
-    return {"message": "Tweet added to index"}
 
 @router.post("/rank", status_code=201)
 async def rank_by_given_tweets(request: TweetRequest) -> Dict[str, TweetRanking]:

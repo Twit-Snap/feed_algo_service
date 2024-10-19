@@ -15,7 +15,8 @@ class AlgoController:
         tweets_received = []
         for tweet_data in request.data:
             tweets_received.append(tweet_data.content)
-        rank_data = self.__db.rank_by_tweets_sample(tweets_received)
+        limit = request.limit
+        rank_data = self.__db.rank_by_tweets_sample(tweets_received, limit)
         tweets_data = [Tweet(id=tweet_id, content=tweet_content) for tweet_id, tweet_content in rank_data.items()]
         return TweetRanking(data=tweets_data)
 
