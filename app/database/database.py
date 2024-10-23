@@ -14,10 +14,13 @@ class VectorialDatabase:
 
         #Initialize the model for embedding the tweets and the index for the Vect database.
         self.model = SentenceTransformer(model_url)
+
+    def __initialize_index(self):
         _index = faiss.IndexFlatIP(self.model.encode(["Seed"]).shape[1])
         self.index = faiss.IndexIDMap(_index)
 
     def add_tweets_to_index(self, tweets_data: List[Tuple[str, str]]):
+        self.__initialize_index()
         for tweet_uuid, tweet_content in tweets_data:
             internal_tweet_id = len(self.tweets)
             self.tweets[internal_tweet_id] = tweet_content
@@ -30,7 +33,7 @@ class VectorialDatabase:
         tweets_sample_embedding = self.model.encode(tweets_sample)
 
         # Make the limit value of k the same as the number of tweets in the database.
-        if k > len(self.tweets): k = len(self.tweets)
+        if k > len(self.tweets): k = (len(self.tweets) -1)
 
         D, I = self.index.search(tweets_sample_embedding, k=k)
         for tweet_id in I[0]:
