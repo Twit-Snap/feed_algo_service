@@ -1,4 +1,5 @@
 import faiss
+import random
 from sentence_transformers import SentenceTransformer
 from typing import List, Tuple
 
@@ -29,11 +30,16 @@ class VectorialDatabase:
         self.index.add_with_ids(tweets_embedding, list(self.tweets.keys()))
 
     def rank_by_tweets_sample(self, tweets_sample: List[str], k: int = 3):
+        # Make the limit value of k the same as the number of tweets in the database.
+        if k > len(self.tweets): k = (len(self.tweets) - 1)
+
+        if len(tweets_sample) == 0:
+            # Return random twits due to the lack of information of the user.
+            random_tweets = random.sample(list(self.tweets.items()), k)
+            return {self.uuid_hash[tweet_id]: tweet_content for tweet_id, tweet_content in random_tweets}
+
         ranking = {}
         tweets_sample_embedding = self.model.encode(tweets_sample)
-
-        # Make the limit value of k the same as the number of tweets in the database.
-        if k > len(self.tweets): k = (len(self.tweets) -1)
 
         D, I = self.index.search(tweets_sample_embedding, k=k)
         for tweet_id in I[0]:
