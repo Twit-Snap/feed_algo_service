@@ -21,7 +21,7 @@ class TopicExtractor:
         cleaned_content = "".join([char if char not in string.punctuation else ' ' for char in tweet_content])
 
         # Remove multiple spaces
-        cleaned_content = re.sub('\s+', ' ', cleaned_content)
+        cleaned_content = re.sub('\\s+', ' ', cleaned_content)
 
         # Lowercase the text
         cleaned_content = cleaned_content.lower()
