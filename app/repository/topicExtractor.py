@@ -1,5 +1,6 @@
 import string
 import re
+import os
 
 import nltk
 nltk.download('punkt')
@@ -13,6 +14,16 @@ from typing import List, Tuple
 class TopicExtractor:
     def __init__(self):
         self.__english_stopwords = set(stopwords.words('english'))
+
+        # Open the file of filtered adjectives and nouns and add them to the stopwords
+        with open(os.path.join(os.path.dirname(__file__), 'filters/filtered_adjectives.txt')) as f:
+            adjectives = [line.strip() for line in f]
+            self.__english_stopwords.update(adjectives)
+
+        with open(os.path.join(os.path.dirname(__file__), 'filters/filtered_nouns.txt')) as f:
+            nouns = [line.strip() for line in f]
+            self.__english_stopwords.update(nouns)
+
         self.__word_frequency = {}
         self.__frequency_sorted = False
 
@@ -23,6 +34,9 @@ class TopicExtractor:
         # Remove multiple spaces
         cleaned_content = re.sub('\\s+', ' ', cleaned_content)
 
+        # Remove # from the twit content so that hashtags can be treated as normal words
+        cleaned_content = cleaned_content.replace('#', '')
+
         # Lowercase the text
         cleaned_content = cleaned_content.lower()
 
@@ -30,8 +44,7 @@ class TopicExtractor:
         words = word_tokenize(cleaned_content)
 
         # Remove Stopwords in the twit
-        stop_words = set(stopwords.words('english'))
-        words = [w for w in words if not w in stop_words]
+        words = [w for w in words if not w in self.__english_stopwords]
 
         # Remove leftover non-alphabetic words from stopword removal
         words = [word for word in words if word.isalpha()]
