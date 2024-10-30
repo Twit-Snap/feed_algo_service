@@ -17,8 +17,22 @@ class TweetRequest(BaseModel):
         extra = "forbid"
         missing = "forbid"
 
+class TrendingTopicRequest(BaseModel):
+    limit: int
+
+    class Config:
+        extra = "forbid"
+        missing = "forbid"
+
 class TweetRanking(BaseModel):
     data: List[Tweet]
+
+    class Config:
+        extra = "forbid"
+        missing = "forbid"
+
+class TrendingTopics(BaseModel):
+    data: List[str]
 
     class Config:
         extra = "forbid"
