@@ -54,8 +54,13 @@ class TopicExtractor:
 
     def load_twit_content(self, tweets_data: List[Tuple[str, str]]):
         cleaned_twits = [self.__clean_tweet_content(tweet_content) for _, tweet_content in tweets_data]
+
+        self.__word_frequency = {}
+        self.__frequency_sorted = False
+
         for twit in cleaned_twits:
-            for word in twit.split():
+            # Make a set out of the filtered twit to ensure that each twit can only add to the frequency of a word once
+            for word in set(twit.split()):
                 if word in self.__word_frequency:
                     self.__word_frequency[word] += 1
                 else:
@@ -64,13 +69,13 @@ class TopicExtractor:
 
     def extract_topics(self, n_topics: int = 5):
         if len(self.__word_frequency) < n_topics:
-            return list(self.__word_frequency.keys())
+            return [{word: freq} for word, freq in self.__word_frequency.items()]
 
         # Sort the words by frequency if not already sorted
         if not self.__frequency_sorted:
             self.__word_frequency = {k: v for k, v in sorted(self.__word_frequency.items(), key=lambda item: item[1], reverse=True)}
             self.__frequency_sorted = True
 
-        return list(self.__word_frequency.keys())[:n_topics]
+        return [{word: freq} for word, freq in list(self.__word_frequency.items())[:n_topics]]
 
 topic_extractor = TopicExtractor()
