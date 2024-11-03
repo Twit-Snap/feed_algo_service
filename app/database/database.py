@@ -9,15 +9,15 @@ from typing import List, Tuple
 
 class VectorialDatabase:
     def __init__(self, model_url: str = "sentence-transformers/all-MiniLM-L6-v2"):
+        # Initialize the model for embedding the tweets and the index for the Vect database.
+        self.model = SentenceTransformer(model_url)
+
+    def __initialize_index(self):
         # Initialize the Tweets and uuid containers.
         # As the vectorial database uses integers for indexing, a copy of the uuids is stored in a dictionary.
         self.uuid_hash = {}
         self.tweets = {}
 
-        # Initialize the model for embedding the tweets and the index for the Vect database.
-        self.model = SentenceTransformer(model_url)
-
-    def __initialize_index(self):
         _index = faiss.IndexFlatIP(self.model.encode(["Seed"]).shape[1])
         self.index = faiss.IndexIDMap(_index)
 
