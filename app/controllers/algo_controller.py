@@ -17,7 +17,7 @@ class AlgoController:
     def rank_by_given_tweets(self, request: TweetRequest) -> TweetRanking:
         print("Sample in the request: ", request.data)
         print("Limit of the request", request.limit)
-        print("Current tweet amount: ", len(self.__db.tweets))
+        self.__db.log_current_status()
 
         tweets_received = []
         for tweet_data in request.data:

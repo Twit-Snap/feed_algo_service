@@ -12,6 +12,9 @@ class VectorialDatabase:
         # Initialize the model for embedding the tweets and the index for the Vect database.
         self.model = SentenceTransformer(model_url)
 
+        self.uuid_hash = {}
+        self.tweets = {}
+
     def __initialize_index(self):
         # Initialize the Tweets and uuid containers.
         # As the vectorial database uses integers for indexing, a copy of the uuids is stored in a dictionary.
@@ -20,6 +23,12 @@ class VectorialDatabase:
 
         _index = faiss.IndexFlatIP(self.model.encode(["Seed"]).shape[1])
         self.index = faiss.IndexIDMap(_index)
+
+    def log_current_status(self):
+        if len(self.tweets) > 0:
+            print("Current number of tweets in the database: ", len(self.tweets))
+        else:
+            print("No content was loaded yet to the Database.")
 
     def add_tweets_to_index(self, tweets_data: List[Tuple[str, str]]):
         self.__initialize_index()
@@ -31,13 +40,14 @@ class VectorialDatabase:
         self.index.add_with_ids(tweets_embedding, list(self.tweets.keys()))
 
     def rank_by_tweets_sample(self, tweets_sample: List[str], k: int = 3):
+        # If k is 0, no tweets are requested so return an empty dictionary.
+        # If index is not initialized due to no twits being loaded, also return an empty dictionary as there's no information to return.
+        if k == 0 or len(self.tweets) == 0:
+            return {}
+
         # Make the limit value of k the same as the number of tweets in the database.
         if k > len(self.tweets):
             k = len(self.tweets)
-
-        # If k is 0, no tweets are loaded so, self.index does not exist
-        if k == 0:
-            return {}
 
         if len(tweets_sample) == 0:
             # Return random twits due to the lack of information of the user.
