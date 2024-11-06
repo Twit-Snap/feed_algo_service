@@ -1,0 +1,93 @@
+# Test your FastAPI endpoints
+
+POST http://{{HOST}}:{{PORT}}/
+Content-Type: application/json
+Accept: application/json
+
+{
+      "content": "Amo el futbol!"
+}
+
+###
+
+POST http://{{HOST}}:{{PORT}}/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "content": "Apple no esta manejando muy bien sus productos"
+}
+
+###
+
+POST http://{{HOST}}:{{PORT}}/rank
+Content-Type: application/json
+Accept: application/json
+
+{
+  "data" : [
+    {
+      "content": "El dia esta muy soleado."
+    },
+    {
+      "content": "El dia no esta muy bonito para jugar a la pelota"
+    },
+    {
+      "content": "El futbol es un deporte muy bonito"
+    }
+  ]
+}
+
+###
+
+POST http://{{HOST}}:{{PORT}}/rank
+Content-Type: application/json
+Accept: application/json
+
+{
+  "data" : [
+    {
+      "content" : "Mi nueva PC mac es muy bonita y rapida"
+    },
+    {
+      "content" : "Programar en python es muy divertido"
+    },
+    {
+      "content" : "Cuando mejorara la economía del país?"
+    },
+    {
+      "content" : "Alguien sabe el mail del departamento de computacion?"
+    },
+    {
+      "content" : "El nuevo iPhone es muy caro"
+    }
+  ]
+}
+
+###
+
+POST http://{{HOST}}:{{PORT}}/rank
+Content-Type: application/json
+Accept: application/json
+
+{
+  "data" : [
+    {
+      "content": "Messi está en su mejor momento!"
+    }
+  ]
+}
+
+###
+
+POST http://{{HOST}}:{{PORT}}/rank
+Content-Type: application/json
+Accept: application/json
+
+{
+  "data" : [
+    {
+      "content": "Que computadora me recomiendan comprar? #ayuda"
+    }
+  ]
+}

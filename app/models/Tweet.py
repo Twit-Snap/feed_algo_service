@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict
 from pydantic import BaseModel
 
 class Tweet(BaseModel):
@@ -17,8 +17,22 @@ class TweetRequest(BaseModel):
         extra = "forbid"
         missing = "forbid"
 
+class TrendingTopicRequest(BaseModel):
+    limit: int
+
+    class Config:
+        extra = "forbid"
+        missing = "forbid"
+
 class TweetRanking(BaseModel):
     data: List[Tweet]
+
+    class Config:
+        extra = "forbid"
+        missing = "forbid"
+
+class TrendingTopics(BaseModel):
+    data: List[Dict[str, int]]
 
     class Config:
         extra = "forbid"
