@@ -32,12 +32,14 @@ class VectorialDatabase:
 
     def add_tweets_to_index(self, tweets_data: List[Tuple[str, str]]):
         self.__initialize_index()
-        for tweet_uuid, tweet_content in tweets_data:
-            internal_tweet_id = len(self.tweets)
-            self.tweets[internal_tweet_id] = tweet_content
-            self.uuid_hash[internal_tweet_id] = tweet_uuid
-        tweets_embedding = self.model.encode(list(self.tweets.values()))
-        self.index.add_with_ids(tweets_embedding, list(self.tweets.keys()))
+
+        if len(tweets_data) > 0:
+            for tweet_uuid, tweet_content in tweets_data:
+                internal_tweet_id = len(self.tweets)
+                self.tweets[internal_tweet_id] = tweet_content
+                self.uuid_hash[internal_tweet_id] = tweet_uuid
+            tweets_embedding = self.model.encode(list(self.tweets.values()))
+            self.index.add_with_ids(tweets_embedding, list(self.tweets.keys()))
 
     def rank_by_tweets_sample(self, tweets_sample: List[str], k: int = 3):
         # If k is 0, no tweets are requested so return an empty dictionary.

@@ -13,9 +13,8 @@ class AlgoController:
         for tweet_data in request.data:
             request_data.append((tweet_data.id, tweet_data.content))
 
-        if len(request_data) > 0:
-            self.__db.add_tweets_to_index(request_data)
-            self.__topic_extractor.load_twit_content(request_data)
+        self.__db.add_tweets_to_index(request_data)
+        self.__topic_extractor.load_twit_content(request_data)
 
     def rank_by_given_tweets(self, request: TweetRequest) -> TweetRanking:
         print("Sample in the request: ", request.data)
