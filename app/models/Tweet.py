@@ -1,39 +1,29 @@
 from typing import List, Dict
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 class Tweet(BaseModel):
     id : str
     content: str
 
-    class Config:
-        extra = "forbid"
-        missing = "forbid"
+    model_config = ConfigDict(extra="forbid")
 
 class TweetRequest(BaseModel):
     data: List[Tweet]
     limit: int
 
-    class Config:
-        extra = "forbid"
-        missing = "forbid"
+    model_config = ConfigDict(extra="forbid")
 
 class TrendingTopicRequest(BaseModel):
     limit: int
 
-    class Config:
-        extra = "forbid"
-        missing = "forbid"
+    model_config = ConfigDict(extra="forbid")
 
 class TweetRanking(BaseModel):
     data: List[Tweet]
 
-    class Config:
-        extra = "forbid"
-        missing = "forbid"
+    model_config = ConfigDict(extra="forbid")
 
 class TrendingTopics(BaseModel):
     data: List[Dict[str, int]]
 
-    class Config:
-        extra = "forbid"
-        missing = "forbid"
+    model_config = ConfigDict(extra="forbid")
