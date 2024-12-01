@@ -14,6 +14,8 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 RUN pip install faiss-cpu
 
 #
+
+COPY newrelic.ini /code/newrelic.ini
 COPY app /code/app
 
 #
