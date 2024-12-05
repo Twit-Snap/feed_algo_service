@@ -2,6 +2,7 @@ import faiss
 import random
 from sentence_transformers import SentenceTransformer
 from typing import List, Tuple
+import gc
 
 # sentence-transformers/all-MiniLM-L6-v2
 # jaimevera1107/all-MiniLM-L6-v2-similarity-es
@@ -20,6 +21,11 @@ class VectorialDatabase:
         # As the vectorial database uses integers for indexing, a copy of the uuids is stored in a dictionary.
         self.uuid_hash = {}
         self.tweets = {}
+
+        self.index = None
+        del self.index
+
+        gc.collect()
 
         _index = faiss.IndexFlatIP(self.model.encode(["Seed"]).shape[1])
         self.index = faiss.IndexIDMap(_index)

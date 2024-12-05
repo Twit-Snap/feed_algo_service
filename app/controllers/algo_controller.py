@@ -17,7 +17,7 @@ class AlgoController:
         self.__topic_extractor.load_twit_content(request_data)
 
     def rank_by_given_tweets(self, request: TweetRequest) -> TweetRanking:
-        print("Sample in the request: ", request.data)
+        # print("Sample in the request: ", request.data)
         print("Limit of the request", request.limit)
         self.__db.log_current_status()
 
